@@ -1,0 +1,61 @@
+<ion-view view-title="Home" ng-controller="myCtrl">
+    <ion-content >
+      <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class = "button-clear" ng-click = "goBack()">
+          <i class = "icon ion-arrow-left-c"></i> Back 
+        </ion-nav-back-button>
+        <ion-nav-title>Title</ion-nav-title>
+      </ion-nav-bar>
+      <ion-nav-view></ion-nav-view>
+
+      <!-- <div class="bar bar-subheader bar-positive">
+          <h2 class="title">Sub Header</h2>
+      </div> -->
+      
+      <div class="bar bar-subheader">
+        <div class="button-bar">
+          <a href="https://www.linkedin.com/in/andres-salinas-a1875b103/" class="button button-positive">Linkedin</a>
+          <a href="https://www.youtube.com/" class="button button-assertive">YouTube</a>
+          <a href="https://www.spotify.com/us/" class="button button-balanced">Spotify</a>
+        </div>
+      </div>
+      <!-- <div class="item item-avatar">
+              <img src="./img/ionic.png" alt="img">
+              <h3>Ionic</h3>
+           </div> -->
+      <div class="list has-subheader has-footer">
+        <div class="item item-input-inset">
+          <label class="item item-input-wrapper"for="">
+            <input type="text" placeholder="Username"/>
+          </label>
+        </div>
+        <div class="item item-input-inset">
+          <label class="item item-input-wrapper"for="">
+            <input type="text" placeholder="Password">
+          </label>
+        </div>
+        <div class="button bar-button block button-assertive">Submit</div>
+        <div>
+          <button class="button" ng-click="triggerActionSheet()">Action Sheet Button</button>
+        </div>
+        <div>
+            <button class="button" ng-click="showLoading()">Backdrop</button>
+        </div>
+        <div>
+          <button class="button" ng-click="onTouchFunction()">Touch</button>
+        </div>
+        <div>
+          <button class="button" ng-click="showPopup()">Pop</button>
+        </div>              
+      </div>          
+    </ion-content>
+    <div align-title="center" class="bar bar-footer bar-assertive" ng-controller="myCtrl">
+      <!-- <div class="buttons">
+        <button class="button">Left Button</button>
+      </div> -->
+      <h1 class="title">Title</h1>
+      <div class="buttons">
+        <button class="button" ng-click="goHome()">Right Button</button>
+      </div>
+    </div>
+</ion-view>

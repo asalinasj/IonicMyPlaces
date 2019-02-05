@@ -1,6 +1,8 @@
 {
   "name": "project_v1",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic1",
   "watchPatterns": [
     "scss/**/*",
