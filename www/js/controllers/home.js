@@ -1,6 +1,7 @@
 angular.module('starter.controllers', [])
 
-.controller('myCtrl', function($scope, $state, $ionicActionSheet, $ionicBackdrop, $timeout, $ionicPopup, $ionicLoading, $ionicHistory) {
+.controller('myCtrl', function($scope, $state, $ionicActionSheet, $ionicBackdrop, $timeout, 
+   $ionicPopup, $ionicLoading, $ionicHistory, Camera) {
     $scope.triggerActionSheet = function() {
        // Show the action sheet
        var showActionSheet = $ionicActionSheet.show({
@@ -97,6 +98,22 @@ angular.module('starter.controllers', [])
     }
     $scope.goProfile = function(){
        $state.go('profile');
+    }
+
+    //camera use
+    $scope.takePicture = function(options){
+      var options = {
+         quality: 75,
+         targetWidth: 200,
+         targetHeight: 200,
+         sourceType: 1
+      };
+
+      Camera.getPicture(options).then(function(imageData) {
+         $scope.picture = imageData;;
+      }, function(err) {
+         console.log(err);
+      });
     }
  })
 
