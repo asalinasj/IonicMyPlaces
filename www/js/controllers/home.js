@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('myCtrl', function($scope, $state, $ionicActionSheet, $ionicBackdrop, $timeout, 
-   $ionicPopup, $ionicLoading, $ionicHistory, Camera) {
+   $ionicPopup, $ionicLoading, $ionicHistory, Camera, $cordovaInAppBrowser) {
     $scope.triggerActionSheet = function() {
        // Show the action sheet
        var showActionSheet = $ionicActionSheet.show({
@@ -114,6 +114,27 @@ angular.module('starter.controllers', [])
       }, function(err) {
          console.log(err);
       });
+
+      var options = {
+         location: 'yes',
+         clearcache: 'yes',
+         toolbar: 'no'
+      };
+      
+      $scope.openBrowser = function() {
+         windows.open('http://ngcordova.com', '_blank');
+         console.log('test browser');
+         alert('hello');
+         // $cordovaInAppBrowser.open('http://ngcordova.com', '_blank', options)
+         
+         // .then(function(event) {
+         //    // success
+         // })
+         
+         // .catch(function(event) {
+         //    // error
+         // });
+      }
     }
  })
 
