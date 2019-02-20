@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('myCtrl', function($scope, $state, $ionicActionSheet, $ionicBackdrop, $timeout, 
-   $ionicPopup, $ionicLoading, $ionicHistory, Camera, $cordovaInAppBrowser) {
+   $ionicPopup, $ionicLoading, $ionicHistory, Camera, $cordovaInAppBrowser, $ionicPlatform) {
     $scope.triggerActionSheet = function() {
        // Show the action sheet
        var showActionSheet = $ionicActionSheet.show({
@@ -114,17 +114,42 @@ angular.module('starter.controllers', [])
       }, function(err) {
          console.log(err);
       });
-
+   }
+      
+      // $ionicPlatform.ready(function() {
+      //    var options = {
+      //       location: 'yes',
+      //       clearcache: 'yes',
+      //       toolbar: 'no'
+      //    };
+      //    console.log('test platform');
+      //    $scope.openbrowser = function() {
+      //       // windows.open('http://ngcordova.com', '_blank');
+      //       console.log('test browser');
+      //       // alert('hello');
+      //       $cordovaInAppBrowser.open('http://ngcordova.com', '_blank', options)
+            
+      //       .then(function(event) {
+      //          // success
+      //       })
+            
+      //       .catch(function(event) {
+      //          // error
+      //       });
+      //    }
+      // })
       var options = {
          location: 'yes',
          clearcache: 'yes',
-         toolbar: 'no'
+         toolbar: 'yes',
+         closebuttoncaption: 'DONE?'
       };
-      
-      $scope.openBrowser = function() {
-         windows.open('http://ngcordova.com', '_blank');
+
+      $scope.openbrowser = function() {
+         var iab = $cordovaInAppBrowser;
+         iab.open('http://ngcordova.com', '_blank', options);
          console.log('test browser');
-         alert('hello');
+         // alert('hello');
          // $cordovaInAppBrowser.open('http://ngcordova.com', '_blank', options)
          
          // .then(function(event) {
@@ -135,6 +160,9 @@ angular.module('starter.controllers', [])
          //    // error
          // });
       }
-    }
+      $scope.checkButton = function() {
+         console.log('test button');
+      }
+    
  })
 
