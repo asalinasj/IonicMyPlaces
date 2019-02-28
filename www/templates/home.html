@@ -7,10 +7,11 @@
         <button class="button" ng-click="takePicture()">
             Take Picture
         </button>
-        <button class="button" ng-click="getPicture()">
+        <button class="button" ng-click="takePictureLib()">
             Open Gallery
         </button>
-        <img ng-src="{{user.picture}}">
+        <img ng-show="picture !== undefined" ng-src="{{picture}}">
+        <img ng-show="picture === undefined" ng-src="http://placehold.it/300x300">
     </ion-content>
     <div class="bar bar-footer bar-positive">
         <div class="buttons">

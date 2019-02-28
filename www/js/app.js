@@ -69,6 +69,17 @@ app.config(function($stateProvider, $urlRouterProvider) {
         controller: 'myCtrl'
       }
     }
+  })
+
+  .state('map', {
+    url: '/map',
+    title: 'Map',
+    views: {
+       'menuContent': {
+         templateUrl: 'templates/map.html',
+         controller: 'MapCtrl'
+       }
+    } 
   });
 
   $urlRouterProvider.otherwise('/');
