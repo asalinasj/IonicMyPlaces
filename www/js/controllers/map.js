@@ -26,27 +26,27 @@ angular.module('starter.controllers')
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
     }
 
-    var options = {timeout: 1000, enableHighAccuracy: true};
+    // var options = {timeout: 1000, enableHighAccuracy: true};
 
-    $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
-        var latLng = new google.maps.latLng(position.coords.latitude, position.coords.longitude);
+    // $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
+    //     var latLng = new google.maps.latLng(position.coords.latitude, position.coords.longitude);
 
-        var mapOptions = {
-            center: latLng,
-            zoom: 15,
-            mapTypeId: google.maps.mapTypeId.ROADMAP
-        };
+    //     var mapOptions = {
+    //         center: latLng,
+    //         zoom: 15,
+    //         mapTypeId: google.maps.mapTypeId.ROADMAP
+    //     };
 
-        $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    }, function(error) {
-        console.log("Could not get location");
-    });
+    //     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    // }, function(error) {
+    //     console.log("Could not get location");
+    // });
 
     $ionicPlatform.ready(function() {    
  
-        $ionicLoading.show({
-            template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Acquiring location!'
-        });
+        // $ionicLoading.show({
+        //     template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Acquiring location!'
+        // });
          
         var posOptions = {
             enableHighAccuracy: true,
@@ -66,14 +66,104 @@ angular.module('starter.controllers')
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };          
              
-            var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions); 
              
             $scope.map = map;   
-            $ionicLoading.hide();           
+            // $ionicLoading.hide();    
+            
+            // google.maps.event.addDomListener(document.getElementById('map'), 'mousedown', function(e) {
+            //     e.preventDefault();
+            //     return false;
+            // });
+
+            // google.maps.eventAddListener(map, 'click', function(event) {
+            //     marker = new google.maps.Marker({
+            //         position: event.myLatlng,
+            //         map: map
+            //     });
+            // });
+
+            // google.maps.event.addDomListener(window, 'load', initialize);
+            google.maps.event.addListenerOnce($scope.map, 'idle', function() {
+                var marker = new google.maps.Marker({
+                    map: $scope.map,
+                    animation: google.maps.Animation.DROP,
+                    position: myLatlng
+                });
+
+                var infoWindow = new google.maps.InfoWindow({
+                    content: "Here I am!"
+                })
+
+                google.maps.event.addListener(marker, 'click', function() {
+                    infoWindow.open($scope.map, marker);
+                })
+            });
+
+            function initMap() {
+                map.addListener('click', function(e) {
+                    placeMarker(e.myLatlng, map);
+                });
+            }
+
+            function placeMarker(myLatlng, map) {
+                var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    map: map
+                });
+                map.panTo(myLatlng);
+            }
              
         }, function(err) {
             $ionicLoading.hide();
             console.log(err);
         });
-    })              
+    }) 
+    // $ionicPlatform.ready(function() {
+    //     function initialize() {
+    //         var mapOptions = {
+    //           center: new google.maps.LatLng(43.07493,-89.381388),
+    //           zoom: 16,
+    //           mapTypeId: google.maps.MapTypeId.ROADMAP
+    //         };
+    //         var map = new google.maps.Map(document.getElementById("map"),
+    //             mapOptions);
+    
+    //         // Stop the side bar from dragging when mousedown/tapdown on the map
+    //         google.maps.event.addDomListener(document.getElementById('map'), 'mousedown', function(e) {
+    //           e.preventDefault();
+    //           return false;
+    //         });
+            
+    //         google.maps.event.addListener(map, 'click', function(event) {
+    //           marker = new google.maps.Marker({
+    //             position: event.latLng,
+    //             map: map
+    //           });
+    //         });
+    
+    //         $scope.map = map;
+    //       }
+    //       google.maps.event.addDomListener(window, 'load', initialize);
+          
+          
+    //       $scope.centerOnMe = function() {
+    //         if(!$scope.map) {
+    //           return;
+    //         }
+    
+    //         $scope.loading = $ionicLoading.show({
+    //           content: 'Getting current location...',
+    //           showBackdrop: false
+    //         });
+    
+    //         navigator.geolocation.getCurrentPosition(function(pos) {
+    //           $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+    //           $scope.loading.hide();
+    //         }, function(error) {
+    //           alert('Unable to get location: ' + error.message);
+    //         });
+    //       };     
+    // }) 
+           
 });
