@@ -98,16 +98,18 @@ angular.module('starter.controllers')
                 google.maps.event.addListener(marker, 'click', function() {
                     infoWindow.open($scope.map, marker);
                 })
+                initMap();
             });
 
             function initMap() {
                 map.addListener('click', function(e) {
-                    placeMarker(e.myLatlng, map);
+                    placeMarker(e.latLng, $scope.map);
                 });
             }
 
             function placeMarker(myLatlng, map) {
                 var marker = new google.maps.Marker({
+                    animation: google.maps.Animation.DROP,
                     position: myLatlng,
                     map: map
                 });
