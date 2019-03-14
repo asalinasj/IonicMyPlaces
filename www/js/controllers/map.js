@@ -67,7 +67,8 @@ angular.module('starter.controllers')
             };          
              
             var map = new google.maps.Map(document.getElementById("map"), mapOptions); 
-             
+            var index = 0;
+            $scope.index = index; 
             $scope.map = map;   
             // $ionicLoading.hide();    
             
@@ -88,7 +89,8 @@ angular.module('starter.controllers')
                 var marker = new google.maps.Marker({
                     map: $scope.map,
                     animation: google.maps.Animation.DROP,
-                    position: myLatlng
+                    position: myLatlng,
+                    draggable: true
                 });
 
                 var infoWindow = new google.maps.InfoWindow({
@@ -98,8 +100,56 @@ angular.module('starter.controllers')
                 google.maps.event.addListener(marker, 'click', function() {
                     infoWindow.open($scope.map, marker);
                 })
-                initMap();
+                //initMap();
+
             });
+
+            // var newMarkerContent = '<div id="content">' + 
+            //                                 '<div id="newContent">' +
+            //                                     '<h1 id="Marker Title">Marker</h1>' +
+            //                                     '<p>Enter Information</p>' +
+            //                                     '<form action="http://10.108.233.67:8080/newMarker" method="post"> ' + 
+            //                                         'Label: <br>' +
+            //                                         '<input type="text" ' + $scope.index + 'name="label"><br> ' + 
+            //                                         'Description: <br>' +
+            //                                         '<input type="text" name="description">' +
+            //                                         '<input type="submit" value="Submit">' +
+            //                                     '</form>'
+            //                                 '</div>' + 
+            //                             '</div>';
+            var newMarkerContent = '<div><p>test</p></div';
+            var newMarkerWindow = new google.maps.InfoWindow({
+                content: newMarkerContent,
+                id: $scope.index
+            })
+
+            map.addListener('click', function(e) {
+                //placeMarker(e.latLng, $scope.map);
+                var newMarker = new google.maps.Marker({
+                    animation: google.maps.Animation.DROP,
+                    position: e.latLng,
+                    map: $scope.map,
+                    draggable: true
+                })
+                newMarker.infowindow = newMarkerWindow;
+                newMarker.addListener('click', function() {
+                    //newMarkerWindow.open($scope.map, newMarker);
+                    newMarkerWindow.setContent('<div><p> ' + newMarkerWindow.id + '</p></div');
+                    this.infowindow.open($scope.map, this);
+                    // $scope.index = $scope.index + 1;
+                    // console.log($scope.index);
+                })
+                $scope.index = $scope.index + 1;
+                //newMarkerWindow.id++;
+                console.log($scope.index);
+                map.panTo(e.latLng);
+            });
+
+            // google.maps.event.addListener(newMarkerWindow, "closeclick", function(e) {
+            //     $scope.index = $scope.index + 1;
+            //     newMarkerWindow.setContent('<div><p> ' + newMarkerWindow.id + '</p></div');
+            //     newMarkerWindow.id++;
+            // })
 
             function initMap() {
                 map.addListener('click', function(e) {
@@ -113,6 +163,9 @@ angular.module('starter.controllers')
                     position: myLatlng,
                     map: map
                 });
+                marker.addListener('click', function() {
+                    newMarkerWindow.open(map, marker);
+                })
                 map.panTo(myLatlng);
             }
              
